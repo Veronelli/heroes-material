@@ -17,13 +17,26 @@ export class HeroesService {
 
   }
 
-  getHeroe(id: string): Observable<Hero> {
+  getHeroe(id: string | number): Observable<Hero> {
     return this.http.get<Hero>(`${this.baseUrl}heroes/${id}`);
 
   }
 
   getHeroesByLetter(termino: string): Observable<Hero[]> {
     return this.http.get<Hero[]>(`${this.baseUrl}heroes?q=${termino}&_limit=4`)
+
+  }
+
+  agregarHeroe(heroe: Hero): Observable<Hero> {
+    return this.http.post<Hero>(`${this.baseUrl}heroes`, heroe);
+
+  }
+  actualizarHeroe(heroe: Hero): Observable<Hero> {
+    return this.http.put<Hero>(`${this.baseUrl}heroes/${heroe.id}`, heroe);
+
+  }
+  borrarHeroe(id: string | number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}heroes/${id}`);
 
   }
 

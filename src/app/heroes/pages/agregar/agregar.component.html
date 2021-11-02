@@ -1,35 +1,60 @@
-<mat-grid-list cols="1" *ngIf="!heroe; else heroee">
-  <mat-grid-tile>
-    <mat-spinner> </mat-spinner>
-  </mat-grid-tile>
-</mat-grid-list>
-<ng-template #heroee>
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
-    <div fxFlex="50">
-      <h1>
-        {{ heroe.superhero }} <small> - {{ heroe.alter_ego }}</small>
-      </h1>
-      <mat-divider></mat-divider>
-      <br />
-      <img src="{{ heroe | image }}" alt="" />
+<h1>{{ heroe.id ? "Actualizar" : "Crear" }} Heroe</h1>
+<mat-divider></mat-divider>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="40px">
+  <div fxFlex="50" fxLayout="column">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <mat-form-field fxFlex="100">
+        <mat-label>Super Heroe</mat-label>
+        <input matInput type="text" required [(ngModel)]="heroe.superhero" />
+      </mat-form-field>
+      <mat-form-field fxFlex="100">
+        <mat-label>Alter Ego</mat-label>
+        <input [(ngModel)]="heroe.alter_ego" matInput type="text" required />
+      </mat-form-field>
     </div>
-    <div fxFlex="50">
-      <h1>Autor: {{ heroe.publisher }}</h1>
-      <mat-divider></mat-divider>
-      <br />
-      <mat-list-item>
-        {{ heroe.first_appearance }}
-      </mat-list-item>
-      <mat-list-item>
-        {{ heroe.characters }}
-      </mat-list-item>
-      <mat-list-item>
-        {{ heroe.alter_ego }}
-      </mat-list-item>
-      <mat-list-item>
-        {{ heroe.publisher }}
-      </mat-list-item>
-      <button mat-button color="warn" (click)="regresar()">Regresar</button>
+    <mat-form-field>
+      <mat-label>Primera Aparicion</mat-label>
+      <input
+        matInput
+        [(ngModel)]="heroe.first_appearance"
+        type="text"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Personajes</mat-label>
+      <input matInput type="text" [(ngModel)]="heroe.characters" required />
+    </mat-form-field>
+
+    <mat-form-field required [(ngModel)]="heroe.publisher">
+      <mat-label>Creador</mat-label>
+      <mat-select>
+        <mat-option>DC-Comic</mat-option>
+        <mat-option>Marvel</mat-option>
+        <mat-option>Otro</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Foto Publisher</mat-label>
+      <input matInput type="url" require [(ngModel)]="heroe.alt_img" />
+    </mat-form-field>
+    <div fxLayout>
+      <button mat-raised-button (click)="guardar()" color="primary">
+        <mat-icon>edit</mat-icon>{{ heroe.id ? "Actualizar" : "Crear" }}
+      </button>
+      <span class="spacer"></span>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="borrar()"
+        *ngIf="heroe.id"
+      >
+        <mat-icon>remove</mat-icon>
+        Remove
+      </button>
     </div>
   </div>
-</ng-template>
+  <div fxFlex="50">
+    <img [src]="heroe | image" />
+  </div>
+</div>
